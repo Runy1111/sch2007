@@ -29,4 +29,7 @@ for i in range(n):
 start, end = map(int, input().split())
 start, end = start - 1, end - 1
 way = [0] * n
-print(BFS())
+if start == end:
+    print(0)
+else:
+    print(BFS())
