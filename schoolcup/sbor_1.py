@@ -1,23 +1,27 @@
-n, l = map(int, input().split())
-ans = 0
-mas = [0]
-k = 1
-now = 1
-for i in range(4*l-3):
-    if now == l:
-        k = -1
-    elif now == 1:
-        k = 1
-    mas.append(now)
-    now += k
-mas = mas[1:]
+def cost(h,c, h_now):
+    c1 = 0
+    c2 = 0
+    for i in range(len(h)):
+        q, w = c[i], h[i]
+        c1 += q * abs(h_now-w)
+        c2 += q * abs(h_now+1-w)
+    if c2 > c1:
+        return [1, c1]
+    return [0, c1]
 
-for i in range(n):
-    num, t_p, t_o = map(int, input().split())
-    if t_o >= l * 2 - 2:
-        ans += 1
+
+n = int(input())
+h = list(map(int, input().split()))
+c = list(map(int, input().split()))
+l = min(h)
+r = max(h)
+c_now = 0
+while r-l > 1:
+    h_now = (r+l)//2
+    u = cost(h, c, h_now)
+    if u[0] == 1:
+        r = h_now
+        c_now = u[1]
     else:
-        t_p = (t_p - 1) % (2*l-2)
-        if num in mas[t_p:t_p+t_o]:
-            ans += 1
-print(ans)
+        l = h_now
+print(r, c_now)
